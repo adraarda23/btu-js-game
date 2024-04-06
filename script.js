@@ -18,25 +18,19 @@ const offset={
 }
 
 const collisionMap = [];
+const battleZoneMap = [];
 const boundaries = [];
-class Boundary {
-    static width = 64;
-    static height = 64;
-    constructor({position}){
-        this.position = position;
-        this.width = 64;
-        this.height = 64;
-    }
-    draw(){
-        ctx.fillStyle = "white";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-    }
+
+
+
+
+for(let i=0;i<collisionData.length;i+=250){
+    collisionMap.push(collisionData.slice(i,i+250));
+
 }
 
-
-
-for(let i=0;i<collisionData.length;i+=140){
-    collisionMap.push(collisionData.slice(i,i+140));
+for(let i=0;i<battleZonesData.length;i+=250){
+    battleZoneMap.push(battleZonesData.slice(i,i+250));
 
 }
 
@@ -58,12 +52,27 @@ collisionMap.forEach((row,i) => {
 }
 );
 
-const testBoundary = new Boundary({
-    position: {
-        x: offset.x +800,
-        y: offset.y +800
-    }
-});
+const battleZones = [];
+
+battleZoneMap.forEach((row,i) => {
+    
+    row.forEach((cell,j) => {
+        if (cell == 31434)
+            battleZones.push(new TestBattleMap({
+                position: {
+                    x: j*TestBattleMap.width + offset.x,
+                    y: i*TestBattleMap.height + offset.y
+                },
+                width: TestBattleMap.width,
+                height: TestBattleMap.height
+            }))
+        
+    })
+}
+);
+
+
+
 
 
 
@@ -74,34 +83,17 @@ const testBoundary = new Boundary({
 
 const image = new Image();
 image.src = "./images/city.png";
+
+
+const foregroundImage = new Image();
+foregroundImage.src = "./images/cityfg.png";
+
+
 const playerImage = new Image();
 playerImage.src = "./images/playerDown.png";
 let lastKey = "";
 
-class Sprite{
-    constructor({position,image,frames={max:1}}){
-        this.position = position;
-        this.image = image;
-        this.frames = frames;
-        this.image.onload = () => {
-            this.width = this.image.width/this.frames.max;
-            this.height = this.image.height;
-        }
-        
-    }
-    draw(){
-        ctx.drawImage(this.image, 0, 0,
-                this.image.width/this.frames.max,
-                this.image.height,
-                this.position.x,
-                this.position.y,
-             
-             this.image.width/this.frames.max,
-             this.image.height);
-             
 
-    }
-}
 //playerStartX, playerStartY,
 
 const player = new Sprite({
@@ -117,6 +109,12 @@ const background = new Sprite({
     position: {x: offset.x,
          y: offset.y},
          image:image,
+});
+
+const foreground = new Sprite({
+    position: {x: offset.x,
+         y: offset.y},
+         image:foregroundImage,
 });
 
 const keys = {
@@ -144,45 +142,115 @@ const checkCollision = ({obj1, obj2}) => {
         obj1.position.y <= obj2.position.y + obj2.height);
 }
 
-const movables = [background,...boundaries];
+const movables = [background,...boundaries,foreground,...battleZones];
 
 const animate = () => {
     window.requestAnimationFrame(animate);
     background.draw();
 boundaries.forEach(boundary => {
     boundary.draw();
-    if(checkCollision({obj1:player, obj2:boundary})){
-        console.log("collision");
-    }
-
 });
-testBoundary.draw();
+
+battleZones.forEach(battleZone => {
+    battleZone.draw();
+});
     player.draw();
+    foreground.draw();
 
 
+    let isColliding = false;
+
+    player.moving = false;
     if(keys.w.pressed && lastKey === "w"){
-        movables.forEach(movable => {
-            movable.position.y += 10;
-        });
+        player.moving = true;
+        for(let i=0;i<boundaries.length;i++){
+            const boundary = boundaries[i];
+            if(checkCollision({obj1:player, obj2:{
+               ...boundary,
+               position:{
+                   x: boundary.position.x,
+                   y: boundary.position.y + 10
+               }
+            }})){
+                isColliding = true;
+                break;
+            }
+        }
         playerImage.src = "./images/playerUp.png";
+        if(!isColliding){
+            movables.forEach(movable => {
+                movable.position.y += 10;
+            });
+            
+        }
+
 }
     else if(keys.a.pressed && lastKey === "a"){
-        movables.forEach(movable => {
-            movable.position.x += 10;
+        player.moving = true;
+        for(let i=0;i<boundaries.length;i++){
+            const boundary = boundaries[i];
+            if(checkCollision({obj1:player, obj2:{
+               ...boundary,
+               position:{
+                   x: boundary.position.x+10,
+                   y: boundary.position.y
+               }
+            }})){
+                isColliding = true;
+                break;
+            }
         }
-        );
+        if(!isColliding){
+            movables.forEach(movable => {
+                movable.position.x += 10;
+            });
+        }
         playerImage.src = "./images/playerLeft.png";
     }
     else if(keys.s.pressed && lastKey === "s"){
-        movables.forEach(movable => {
-            movable.position.y -= 10;
-        });
+        player.moving = true;
+        for(let i=0;i<boundaries.length;i++){
+            const boundary = boundaries[i];
+            if(checkCollision({obj1:player, obj2:{
+               ...boundary,
+               position:{
+                   x: boundary.position.x,
+                   y: boundary.position.y - 10
+               }
+            }})){
+                isColliding = true;
+                break;
+            }
+        }
+        if(!isColliding){
+            movables.forEach(movable => {
+                movable.position.y -= 10;
+            });
+        }
+
         playerImage.src = "./images/playerDown.png";
     }
     else if(keys.d.pressed && lastKey==="d"){
-        movables.forEach(movable => {  
-            movable.position.x -= 10;
-        });
+        player.moving = true;
+        for(let i=0;i<boundaries.length;i++){
+            const boundary = boundaries[i];
+            if(checkCollision({obj1:player, obj2:{
+               ...boundary,
+               position:{
+                   x: boundary.position.x-10,
+                   y: boundary.position.y
+               }
+            }})){
+                isColliding = true;
+                break;
+            }
+        }
+        if(!isColliding){
+            movables.forEach(movable => {  
+                movable.position.x -= 10;
+            });
+            }
+
         playerImage.src = "./images/playerRight.png";
     }
     // else{
