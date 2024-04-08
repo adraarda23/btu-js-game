@@ -51,3 +51,9 @@ const checkCollision = ({ obj1, obj2 }) => {
     });
     return zoneList;
   };
+
+  function clearCanvas() {
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height); 
+}

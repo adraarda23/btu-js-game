@@ -9,10 +9,22 @@ foregroundImage.src = "./images/cityfg.png";
 const playerImage = new Image();
 playerImage.src = "./images/playerDown.png";
 
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = "./images/battleBackground.png";
+battleBackgroundImage.width= screen.width;
+battleBackgroundImage.height= screen.height;
+
+
 const offset={
     x:-400,
     y:-1200,
 }
+
+const battle = {
+    initiated: false,
+}
+
+const transitionEffect = document.getElementById("transition-effect");
 
 const keys = {
     w:{pressed: false,},

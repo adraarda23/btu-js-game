@@ -32,6 +32,11 @@ const foreground = new Sprite({
   image: foregroundImage,
 });
 
+const battleBackground = new Sprite({
+  position: { x: 0, y:0 },
+  image: battleBackgroundImage,
+});
+
 
 
 
@@ -39,7 +44,7 @@ const foreground = new Sprite({
 const movables = [background, ...boundaries, foreground, ...battleZones];
 
 const animate = () => {
-  window.requestAnimationFrame(animate);
+  const animationId =window.requestAnimationFrame(animate);
 
   background.draw();
   boundaries.forEach((boundary) => {
@@ -50,6 +55,11 @@ const animate = () => {
   });
   player.draw();
   foreground.draw();
+
+  player.moving = false;
+  let isColliding = false;
+
+  if(battle.initiated)return;
 
   if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
@@ -74,15 +84,22 @@ const animate = () => {
         overlappingArea > (player.width * player.height) / 2 &&
         Math.random() < 0.1
       ) {
-        console.log("battle");
+        window.cancelAnimationFrame(animationId);
+        battle.initiated = true;
+        transitionEffect.style.display = "block";
+        setTimeout(function() {
+          transitionEffect.style.display = "none";
+          animateBattle();
+      }, 1000); 
+
+        
         break;
       }
     }
   }
 
-  player.moving = false;
-  let isColliding = false;
-  function movePlayer(xOffset, yOffset, imageSrc) {
+
+  const movePlayer =(xOffset, yOffset, imageSrc)=> {
     player.moving = true;
     playerImage.src = imageSrc;
     for (let i = 0; i < boundaries.length; i++) {
@@ -124,6 +141,16 @@ const animate = () => {
 };
 
 animate();
+
+const animateBattle = () => {
+  window.requestAnimationFrame(animateBattle);
+  battleBackground.draw();
+  
+  
+}
+
+
+
 
 window.addEventListener("keydown", (e) => {
   handleKeyEvent(e.key, true);
