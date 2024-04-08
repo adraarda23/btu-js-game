@@ -11,8 +11,6 @@ playerImage.src = "./images/playerDown.png";
 
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "./images/battleBackground.png";
-battleBackgroundImage.width= screen.width;
-battleBackgroundImage.height= screen.height;
 
 
 const offset={

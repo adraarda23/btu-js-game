@@ -32,10 +32,7 @@ const foreground = new Sprite({
   image: foregroundImage,
 });
 
-const battleBackground = new Sprite({
-  position: { x: 0, y:0 },
-  image: battleBackgroundImage,
-});
+
 
 
 
@@ -144,10 +141,12 @@ animate();
 
 const animateBattle = () => {
   window.requestAnimationFrame(animateBattle);
-  battleBackground.draw();
+  ctx.drawImage(battleBackgroundImage, 0, 0, window.innerWidth, window.innerHeight);
   
   
 }
+
+//animateBattle();
 
 
 
