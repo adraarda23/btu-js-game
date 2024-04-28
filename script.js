@@ -32,12 +32,6 @@ const foreground = new Sprite({
   image: foregroundImage,
 });
 
-
-
-
-
-
-
 const movables = [background, ...boundaries, foreground, ...battleZones];
 
 const animate = () => {
@@ -147,9 +141,6 @@ const animateBattle = () => {
 }
 
 //animateBattle();
-
-
-
 
 window.addEventListener("keydown", (e) => {
   handleKeyEvent(e.key, true);
