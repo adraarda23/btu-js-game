@@ -1,62 +1,183 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body{
-            margin: 0px;
-            padding: 0px;
-            width: 100%;
-            height: 100vh;
-            background-color: rgb(35, 98, 154);
-            color: #ffffff;
-        }
-        a{
-            color: #ffffff;
-            text-decoration: none;
-            margin: 10px;
-            font-size: 2rem;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-            text-align: center;
-            padding: 10px;
-            width: 10rem;
-        }
-        a:hover{
-            background-color: #ffffff;
-            color: rgb(35, 98, 154);
-        }
-        h1{
-            font-size: 5rem;
-        }
-        #menu{
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        #pikachu-image{
-            width: 200px;
-            height: 200px;
-        }
-    </style>
-</head>
-<body>
-    <div id="menu">
-        <img id="pikachu-image" src="./images/pikachu.png" alt="pikachu">
-        <h1>
-            BTÜMON
-        </h1>
-        <a href="controls.html">Kontroller</a>
-        <a href="game.html">Oyuna Başla</a>
+<style>
+@keyframes fadeIn {
+    0% {
+        opacity: 0.5;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#transition-effect {
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out 0.5;
+}
+
+#battle-screen{
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    background-image: url("images/battleMap.jpg");
+    background-size: cover;
+    display: flex;
+
+    
+}
+h1,p{
+    color: #fff;
+    font-size: large;
+    margin-right:5px ;
+}
+
+button{
+    background-color:transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+#friendly-player-info, #enemy-player-info,#battle-buttons{
+position: absolute;
+}
+#friendly-player-info{
+    bottom: 10px;
+    left: 10px;
+}
+#enemy-player-info{
+    bottom: 10px;
+    right: 10px;
+}
+#battle-buttons{
+    bottom: 10px;
+    left: 200px;
+}
+#pikachu{
+    position: absolute;
+    bottom: 150;
+    left:200;
+    width: 200px;
+    height: 200px;
+    animation: upDown 1s infinite;
+}
+
+#enemy-pokemon{
+    position: absolute;
+    bottom: 150;
+    right: 200;
+    width: 200px;
+    height: 200px;
+    animation: upDown 1s infinite;
+}
+#controls{
+    color: #fff;
+    position: absolute;
+    right:70%;
+    top:40%;
+    background-color: black;
+
+}
+
+@keyframes upDown {
+    0% {
+        bottom: 150px;
+    }
+    50% {
+        bottom: 160px;
+    }
+    100% {
+        bottom: 150px;
+    }
+}
+
+
+</style>
+<div id="login-screen">
+    <div id="transition-effect">
+    </div>
+    <div id="controls">
+        <h1>Nasıl Oynanır ?</h1>
+        <p>Amacınız : Haritada gezerken ölmemek</p>
+        <p>Kırmızı alanlarda gezmek savaş başlatır</p>
+        <p>W: Karakterinizi yukarı doğru hareket ettirir</p>
+        <p>A: Karakterinizi sola doğru hareket ettirir  / Savaş sırasında rakibe saldırmaya yarar.</p>
+        <p>S: Karakterinizi aşağı doğru hareket ettirir</p>
+        <p>D: Karakterinizi sağa doğru hareket ettirir / Savaş sırasında kendi savunmanızı arttırır.</p>
+        <p>H: Savaş sırasında karakterinizi iyileştirir</p>
+        <p>E: Savaştan kaçabilmenizi sağlar</p>
+        <p id="countdown">30</p>
+    </div>
+    <div id="battle-screen" style="display: none;">
+        <img id="pikachu" src="./images/pikachu.png" alt="pikachu">
+        <img id="enemy-pokemon" src="" alt="enemy-pokemon">
+
+        <div id="friendly-player-info">
+           
+                <p>Player </p>
+                <p>Health: <span id="player-health"></span></p>
+                <p>Attack: <span id="player-attack"></span></p>
+                <p>Defense: <span id="player-defense"></span></p>
+           
+         </div>
 
         
+        <div id="battle-buttons">
+            <button id="attack-button">Attack (A)</button>
+            <button id="defend-button">Defend (D)</button>
+            <button id="heal-button">Heal (H)</button>
+            <button id="escape-button">Escape (E)</button>
+        </div>
 
-        <p>Arda Aydın Kılınç - 21360859039</p>
+        <div id="enemy-player-info">
+            
+                <p>Enemy </p>
+                <p>Health: <span id="enemy-health"></span></p>
+                <p>Attack: <span id="enemy-attack"></span></p>
+                <p>Defense: <span id="enemy-defense"></span></p>
+            </div>
     </div>
+        <canvas></canvas>
+</div>
+<script src="data.js"></script>
+<script src="combat.js"></script>
+<script src="class.js"></script>
+<script src="functions.js"></script>
+<script src="script.js"></script>
+<script>
+    setInterval(()=>{
+        document.getElementById("controls").style.display = "none";
+    },30000);
 
-</body>
-</html>
+var count = 30;
+var countdown = setInterval(function() {
+    count--;
+    document.getElementById('countdown').textContent = count;
+    if (count === 0) {
+        clearInterval(countdown);
+        document.getElementById('countdown').remove(); 
+    }
+}, 1000); 
+
+
+</script>
+

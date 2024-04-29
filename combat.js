@@ -109,7 +109,7 @@ const enemyMove = () => {
     playerHealth.innerText -= playerDamage;
     combatData.playerStats.hp = playerHealth.innerText;
     if(combatData.playerStats.hp <= 0){
-        window.location.href="dead.html";
+        window.location.href="index.html";
     }
     isPlayerTurn = true;
 }
