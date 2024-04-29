@@ -73,7 +73,7 @@ const animate = () => {
       if (
         checkCollision({ obj1: player, obj2: battleZone }) &&
         overlappingArea > (player.width * player.height) / 2 &&
-        Math.random() < 0.1
+        Math.random() < 0.01
       ) {
         window.cancelAnimationFrame(animationId);
         startCombat();

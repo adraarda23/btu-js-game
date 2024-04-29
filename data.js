@@ -12,6 +12,19 @@ playerImage.src = "./images/playerDown.png";
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "./images/battleBackground.png";
 
+const pikachuImage = "./images/enemy-pikachu.png";
+
+const charmanderImage ="./images/charmander.png";
+
+const squirtleImage = "./images/squirtle.png";
+
+const bulbasaurImage ="./images/bulbasaur.png";
+
+
+const musicVolume = {
+    volume: 0.1,
+}
+
 
 const offset={
     x:-400,
@@ -35,7 +48,7 @@ const combatData = {
         {hp: 15, atk: 7, def: 2},
         {hp: 20, atk: 9, def: 3},
         {hp: 5, atk: 10, def: 1},
-    ]
+    ],randomEnemyImages:[pikachuImage, charmanderImage, squirtleImage, bulbasaurImage],
     }
 
 

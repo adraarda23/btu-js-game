@@ -52,3 +52,11 @@ const checkCollision = ({ obj1, obj2 }) => {
     return zoneList;
   };
 
+
+  function adjustVolume(volume) {
+    console.log(volume);
+    battleSound.volume = volume/2;
+    attackSound.volume = volume;
+    defendSound.volume = volume;
+    healSound.volume = volume;
+}

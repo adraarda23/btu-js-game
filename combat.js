@@ -11,11 +11,23 @@ const defendButton = document.getElementById('defend-button');
 const healButton = document.getElementById('heal-button');
 const escapeButton = document.getElementById('escape-button');
 
+const randomEnemyImage = document.getElementById('enemy-pokemon');
+const attackSound = new Audio("./sound/attack.mp3");
+const healSound = new Audio("./sound/heal.mp3");
+const defendSound = new Audio("./sound/defend.mp3");
+const battleSound = new Audio("./sound/battle-sound.mp3");
+
+attackSound.volume = musicVolume.volume/2;
+healSound.volume = musicVolume.volume/2;
+defendSound.volume = musicVolume.volume/2;
+battleSound.volume = musicVolume.volume/3;
+
 
 
 
 
 attackButton.addEventListener('click', () => {
+    attackSound.play();
     enemyHealth.innerText -= Math.max(0, Math.ceil(Math.random() * (playerAttack.innerText - enemyDefense.innerText)));
     if(enemyHealth.innerText <= 0){
         endBattle();
@@ -28,16 +40,15 @@ attackButton.addEventListener('click', () => {
 });
 
 defendButton.addEventListener('click', () => {
+    defendSound.play();
     playerDefense.innerText = Math.min(100, parseInt(playerDefense.innerText) + 3*Math.ceil(Math.random()));
-
     isPlayerTurn = false;
     enemyMove();
 });
 
 healButton.addEventListener('click', () => {
-    console.log(Math.min(100,parseInt(playerHealth.innerText)+ 30*Math.ceil(Math.random())));
+    healSound.play();
     playerHealth.innerText = Math.min(100,parseInt(playerHealth.innerText)+ 30*Math.ceil(Math.random()));
-    console.log('Heal clicked');
     isPlayerTurn = false;
     enemyMove();
 });
@@ -80,6 +91,8 @@ document.addEventListener('keydown', (event) => {
 const startCombat = () => {
     battle.initiated = true;
     isPlayerTurn = true;
+    battleSound.play();
+    randomEnemyImage.src=combatData.randomEnemyImages[Math.floor(Math.random() * combatData.randomEnemyImages.length)];
     playerHealth.innerText = combatData.playerStats.hp;
     playerAttack.innerText = combatData.playerStats.atk;
     playerDefense.innerText = combatData.playerStats.def;
@@ -102,6 +115,7 @@ const enemyMove = () => {
 }
 
 const endBattle = () => {
+    battleSound.pause();
     battle.initiated = false;
     battleScreen.style.display = 'none';
     transitionEffect.style.display = 'block';
@@ -109,4 +123,8 @@ const endBattle = () => {
         transitionEffect.style.display = 'none';
         animate();
     }, 1000);
+}
+
+function adjustVolume(volume) {
+    musicVolume.volume = volume;
 }
