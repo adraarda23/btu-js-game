@@ -89,6 +89,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 const startCombat = () => {
+    document.getElementById("controls").style.display = 'none';
     battle.initiated = true;
     isPlayerTurn = true;
     battleSound.play();
