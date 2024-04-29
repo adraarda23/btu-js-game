@@ -13,6 +13,10 @@ let playerStartY = canvas.height / (4 * zoomLevel);
 const boundaries = createZones(collisionData, 31441);
 const battleZones = createZones(battleZonesData, 31434);
 
+const mainSound = new Audio("sound/main-sound.mp3");
+mainSound.volume=0.2;
+mainSound.play();
+
 const player = new Sprite({
   position: {
     x: canvas.width / (2 * zoomLevel),

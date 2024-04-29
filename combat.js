@@ -92,6 +92,7 @@ const startCombat = () => {
     document.getElementById("controls").style.display = 'none';
     battle.initiated = true;
     isPlayerTurn = true;
+    mainSound.pause();
     battleSound.play();
     randomEnemyImage.src=combatData.randomEnemyImages[Math.floor(Math.random() * combatData.randomEnemyImages.length)];
     playerHealth.innerText = combatData.playerStats.hp;
@@ -117,6 +118,7 @@ const enemyMove = () => {
 
 const endBattle = () => {
     battleSound.pause();
+    mainSound.play();
     battle.initiated = false;
     battleScreen.style.display = 'none';
     transitionEffect.style.display = 'block';
