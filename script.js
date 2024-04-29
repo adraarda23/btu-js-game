@@ -76,14 +76,12 @@ const animate = () => {
         Math.random() < 0.1
       ) {
         window.cancelAnimationFrame(animationId);
-        battle.initiated = true;
+        startCombat();
         transitionEffect.style.display = "block";
         setTimeout(function() {
           transitionEffect.style.display = "none";
-          animateBattle();
-      }, 1000); 
-
-        
+          battleScreen.style.display = "block";
+       }, 1000);
         break;
       }
     }
@@ -133,12 +131,12 @@ const animate = () => {
 
 animate();
 
-const animateBattle = () => {
-  window.requestAnimationFrame(animateBattle);
-  ctx.drawImage(battleBackgroundImage, 0, 0, window.innerWidth, window.innerHeight);
+// const animateBattle = () => {
+//   window.requestAnimationFrame(animateBattle);
+//   ctx.drawImage(battleBackgroundImage, 0, 0, window.innerWidth, window.innerHeight);
+
   
-  
-}
+// }
 
 //animateBattle();
 

@@ -22,7 +22,25 @@ const battle = {
     initiated: false,
 }
 
+const combatData = {
+    playerStats:{
+        hp: 100,
+        atk: 20,
+        def: 5,
+    },randomEnemyStats:[
+        {hp: 20, atk: 6, def: 3},
+        {hp: 30, atk: 8, def: 2},
+        {hp: 10, atk: 5, def: 1},
+        {hp: 25, atk: 4, def: 2},
+        {hp: 15, atk: 7, def: 2},
+        {hp: 20, atk: 9, def: 3},
+        {hp: 5, atk: 10, def: 1},
+    ]
+    }
+
+
 const transitionEffect = document.getElementById("transition-effect");
+const battleScreen = document.getElementById("battle-screen");
 
 const keys = {
     w:{pressed: false,},

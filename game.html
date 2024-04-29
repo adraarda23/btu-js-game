@@ -22,18 +22,94 @@
     animation: fadeIn 0.5s ease-in-out 0.5;
 }
 
+#battle-screen{
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    background-image: url("images/battleMap.jpg");
+    background-size: cover;
+    display: flex;
+
+    
+}
+h1,p{
+    color: #fff;
+    font-size: large;
+    margin-right:5px ;
+}
+
+button{
+    background-color:transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
 
 body{
     margin: 0px;
     padding: 0px;
 }
+#friendly-player-info, #enemy-player-info,#battle-buttons{
+position: absolute;
+}
+#friendly-player-info{
+    bottom: 10px;
+    left: 10px;
+}
+#enemy-player-info{
+    top: 10px;
+    right: 10px;
+}
+#battle-buttons{
+    bottom: 10px;
+    right: 10px;
+}
+
+
 </style>
 <div id="login-screen">
     <div id="transition-effect">
     </div>
+    <div id="battle-screen" style="display: none;">
+
+
+        <div id="friendly-player-info">
+           
+                <p>Player </p>
+                <p>Health: <span id="player-health"></span></p>
+                <p>Attack: <span id="player-attack"></span></p>
+                <p>Defense: <span id="player-defense"></span></p>
+           
+         </div>
+
+        
+        <div id="battle-buttons">
+            <button id="attack-button">Attack (A)</button>
+            <button id="defend-button">Defend (D)</button>
+            <button id="heal-button">Heal (H)</button>
+            <button id="escape-button">Escape (E)</button>
+        </div>
+
+        <div id="enemy-player-info">
+            
+                <p>Enemy </p>
+                <p>Health: <span id="enemy-health"></span></p>
+                <p>Attack: <span id="enemy-attack"></span></p>
+                <p>Defense: <span id="enemy-defense"></span></p>
+            </div>
+    </div>
         <canvas></canvas>
 </div>
 <script src="data.js"></script>
+<script src="combat.js"></script>
 <script src="class.js"></script>
 <script src="functions.js"></script>
 <script src="script.js"></script>
