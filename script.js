@@ -131,15 +131,6 @@ const animate = () => {
 
 animate();
 
-// const animateBattle = () => {
-//   window.requestAnimationFrame(animateBattle);
-//   ctx.drawImage(battleBackgroundImage, 0, 0, window.innerWidth, window.innerHeight);
-
-  
-// }
-
-//animateBattle();
-
 window.addEventListener("keydown", (e) => {
   handleKeyEvent(e.key, true);
 });
