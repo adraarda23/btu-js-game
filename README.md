@@ -3,6 +3,7 @@
 ## Oyun Hakkında
 
 Bu proje, JavaScript kullanarak geliştirilen bir oyunu içerir. Oyunun amacı,BTÜ'de gezerken hayatta kalmak.
+[Oyunun Linki](https://adraarda23.github.io/btu-js-game/)
 
 ## Oyun Oynanış Videosu
 
